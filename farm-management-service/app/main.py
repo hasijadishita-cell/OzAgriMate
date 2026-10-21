@@ -9,7 +9,7 @@ def add_farm(name: str, location: str, sizeHectares: float):
   
   farms[farm_id]={
     "name": name,
-    "location": location
+    "location": location,
     "sizeHectares": sizeHectares
   }
   return{
