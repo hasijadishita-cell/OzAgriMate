@@ -12,7 +12,7 @@ def get_sensor_status(sensor_id: int):
     if last_reading is None:
         raise HTTPException(status_code=404, detail="No readings recorded for this sensor")
 
-    now = datetime.now().astimezone()
+    now = datetime.now().astimezone().replace(microsecond=0)
     time_since_last_reading = now - last_reading["recordedAt"]
 
     # Offline if there has been no reading for 24 hours
