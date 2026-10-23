@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-now = datetime.now().astimezone()
+now = datetime.now().astimezone().replace(microsecond=0)
 
 # # Every sensor in OzAgriMate and which farm it belongs to
 sensors = {
@@ -67,5 +67,5 @@ def get_latest_reading(sensor_id: int):
         if reading["sensorId"] == sensor_id:
             if latest is None or reading["recordedAt"] > latest["recordedAt"]:
                 latest = reading
-
+                
     return latest
