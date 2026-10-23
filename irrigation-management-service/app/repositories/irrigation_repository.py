@@ -29,3 +29,23 @@ def get_schedules_by_farm(farm_id: int):
         for schedule in irrigation_schedules
         if schedule["farmId"] == farm_id
     ]
+
+def update_schedule(
+    farm_id: int,
+    schedule_id: int,
+    start_time: str,
+    duration_minutes: int,
+    status: str,
+):
+    for schedule in irrigation_schedules:
+        if (
+            schedule["farmId"] == farm_id
+            and schedule["scheduleId"] == schedule_id
+        ):
+            schedule["startTime"] = start_time
+            schedule["durationMinutes"] = duration_minutes
+            schedule["status"] = status
+
+            return schedule
+
+    return None
