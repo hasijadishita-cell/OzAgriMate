@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import APIRouter, HTTPException
 from app import service
 from app.models import FarmRequest
 
@@ -6,11 +6,11 @@ router = APIRouter()
 #POST- Create a farm
 @router.post("/farms", status_code=201)
 def add_farm(request: FarmRequest):
-  farms[farm_id]={
-    "name": name,
-    "location": location,
-    "sizeHectares": sizeHectares
-  }
+  farm_id = service.add_farm(
+    request.name,
+    request.location,
+    request.sizeHectares
+  )
   return{
   "farmID": farm_id,
   "message": "Farm created successfully"
@@ -18,23 +18,34 @@ def add_farm(request: FarmRequest):
 
 #PUT- Update a farm
 @router.put("/farms/{farm_id}")
-def update_farm(farmID: int, request: FarmRequest):
+def update_farm(farm_id: int, request: FarmRequest):
   updated= service.update_farm(
-    farmID,
+    farm_id,
     request.name,
     request.location,
     request.sizeHectares)
-  return {
-  "farmID": farmID,
+  if updated:
+    return {
+  "farm_id": farm_id,
   "message": "Farm updated successfully"
   }
+  else:
+    raise HTTPException(
+      status_code=404,
+      detail= "Farm not found"
+    )
 
 #DELETE- Delete a farm
-def delete_farm(farmID: int):
+@router.delete("/farms/{farm_id}")
+def delete_farm(farm_id: int):
   deleted= service.delete_farm(farm_id)
   if not deleted:
     raise HTTPException(status_code=404, detail="Farm not found")
   return {"message": "Farm deleted successfully"}
+
+
+ 
+
 
 
  
