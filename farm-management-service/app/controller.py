@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from app import service
-from app.models import Farm reuest
+from app.models import FarmRequest
 
 router = APIRouter()
 #POST- Create a farm
@@ -24,8 +24,7 @@ def update_farm(farmID: int, request: FarmRequest):
     request.name,
     request.location,
     request.sizeHectares)
-
-return {
+  return {
   "farmID": farmID,
   "message": "Farm updated successfully"
   }
